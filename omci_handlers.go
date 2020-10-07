@@ -50,9 +50,9 @@ func mibReset(class OmciClass, content OmciContent, key OnuKey) ([]byte, error) 
 	OnuOmciStateMapLock.RLock()
 	if state, ok := OnuOmciStateMap[key]; ok {
 		log.WithFields(log.Fields{
-		"IntfId": key.IntfId,
-		"OnuId": key.OnuId,
-	}).Tracef("Reseting OnuOmciState")
+			"IntfId": key.IntfId,
+			"OnuId": key.OnuId,
+		}).Tracef("Reseting OnuOmciState")
 		state.ResetOnuOmciState()
 	}
 	OnuOmciStateMapLock.RUnlock()
@@ -242,14 +242,10 @@ func mibUploadNext(class OmciClass, content OmciContent, key OnuKey) ([]byte, er
 		pkt[11] = state.uniGInstance // UNI-G ME Instance
 		state.uniGInstance++
 
-	case 26,  30,  34,  38,  42, 46, 50, 54,
-	     58,  62,  66,  70,  74, 78, 82, 86,
-	     90,  94,  98,  102, 106, 110, 114, 118,
-	     122, 126, 130, 134, 138, 142, 146, 150,
-	     154, 158, 162, 166, 170, 174, 178, 182,
-	     186, 190, 194, 198, 202, 206, 210, 214,
-	     218, 222, 226, 230, 234, 238, 242, 246,
-	     250, 254, 258, 262, 266, 270, 274, 278:
+	case 26, 30, 34, 38, 42, 46, 50, 54,
+		58, 62, 66, 70, 74, 78, 82, 86,
+		90, 94, 98, 102, 106, 110, 114, 118,
+		122, 126, 130, 134, 138, 142, 146, 150:
 		// Prior-Q with mask downstream
 		log.Tracef("Mib-upload for prior-q with mask")
 		// For downstream PQ, pkt[10] is 0x00
@@ -265,14 +261,10 @@ func mibUploadNext(class OmciClass, content OmciContent, key OnuKey) ([]byte, er
 		state.priorQInstance++
 		pkt[11] = state.priorQInstance
 
-	case 27,  31,  35,  39,  43,  47, 51, 55,
-	     59,  63,  67,  71,  75,  79, 83, 87,
-	     91,  95,  99,  103, 107, 111, 115, 119,
-	     123, 127, 131, 135, 139, 143, 147, 151,
-	     155, 159, 163, 167, 171, 175, 179, 183,
-	     187, 191, 195, 199, 203, 207, 211, 215,
-	     219, 223, 227, 231, 235, 239, 243, 247,
-	     251, 255, 259, 263, 267, 271, 275, 279:
+	case 27, 31, 35, 39, 43, 47, 51, 55,
+		59, 63, 67, 71, 75, 79, 83, 87,
+		91, 95, 99, 103, 107, 111, 115, 119,
+		123, 127, 131, 135, 139, 143, 147, 151:
 		// Prior-Q with attribute list downstream
 		// log.Println("Mib-upload for prior-q with attribute list")
 		pkt = []byte{
@@ -302,14 +294,10 @@ func mibUploadNext(class OmciClass, content OmciContent, key OnuKey) ([]byte, er
 		pkt[26] = state.priorQPriority % NumPriorQPerTcont
 		pkt[28] = state.tcontInstance
 
-	case 28,  32,  36,  40,  44, 48, 52, 56,
-	     60,  64,  68,  72,  76, 80, 84, 88,
-	     92,  96,  100, 104, 108, 112, 116, 120,
-	     124, 128, 132, 136, 140, 144, 148, 152,
-	     156, 160, 164, 168, 172, 176, 180, 184,
-	     188, 192, 196, 200, 204, 208, 212, 216,
-	     220, 224, 228, 232, 236, 240, 244, 248,
-	     252, 256, 260, 264, 268, 272, 276, 280:
+	case 28, 32, 36, 40, 44, 48, 52, 56,
+		60, 64, 68, 72, 76, 80, 84, 88,
+		92, 96, 100, 104, 108, 112, 116, 120,
+		124, 128, 132, 136, 140, 144, 148, 152:
 		// Prior-Q with mask upstream
 		// log.Println("Mib-upload for prior-q with mask")
 		pkt = []byte{
@@ -322,14 +310,10 @@ func mibUploadNext(class OmciClass, content OmciContent, key OnuKey) ([]byte, er
 		}
 		pkt[11] = state.priorQInstance
 
-	case 29,  33,  37, 41, 45, 49, 53, 57,
-	     61,  65,  69, 73, 77, 81, 85, 89,
-	     93, 97,  101, 105, 109, 113, 117, 121,
-	     125, 129, 133, 137, 141, 145, 149, 153,
-	     157, 161, 165, 169, 173, 177, 181, 185,
-	     189, 193, 197, 201, 205, 209, 213, 217,
-	     221, 225, 229, 233, 237, 241, 245, 249,
-	     253, 257, 261, 265, 269, 273, 277, 281:
+	case 29, 33, 37, 41, 45, 49, 53, 57,
+		61, 65, 69, 73, 77, 81, 85, 89,
+		93, 97, 101, 105, 109, 113, 117, 121,
+		125, 129, 133, 137, 141, 145, 149, 153:
 		// Prior-Q with attribute list upstream
 		// log.Println("Mib-upload for prior-q with attribute list")
 		// For upstream pkt[10] is fixed as 80
@@ -349,8 +333,7 @@ func mibUploadNext(class OmciClass, content OmciContent, key OnuKey) ([]byte, er
 		pkt[28] = state.tcontInstance
 		state.priorQPriority++
 
-
-	case 282, 283, 284, 285, 286, 287, 288, 289:
+	case 154, 155, 156, 157, 158, 159, 160, 161:
 		// Traffic Scheduler
 		// log.Println("Traffic Scheduler")
 		pkt = []byte{
@@ -365,7 +348,7 @@ func mibUploadNext(class OmciClass, content OmciContent, key OnuKey) ([]byte, er
 		pkt[15] = state.tcontInstance
 		state.tcontInstance++
 
-	case 290:
+	case 162:
 		// ONT-2G
 		// log.Println("ONT-2G")
 		pkt = []byte{
@@ -594,7 +577,7 @@ func testHandler(class OmciClass, content OmciContent, key OnuKey) ([]byte, erro
 		0x1c, 0xd0, 0x0c, 0x32, 0x80, 0x00, 0x00, 0x00,
 		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-		0x00, 0x28, 0xf8, 0x13, 0x1b, 0x36,}
+		0x00, 0x28, 0xf8, 0x13, 0x1b, 0x36}
 
 	log.WithFields(log.Fields{
 		"IntfId": key.IntfId,

@@ -16,7 +16,7 @@
 
 package core
 
-const NumMibUploadsHigherByte byte = 0x01
-const NumMibUploadsLowerByte byte = 0x23
+const NumMibUploadsHigherByte byte = 0x00
+const NumMibUploadsLowerByte byte = 0xA3
 const NumPriorQPerTcont = 0x08 // NumPriorQPerTcont is the number of priority queues associated with a single tcont
 
